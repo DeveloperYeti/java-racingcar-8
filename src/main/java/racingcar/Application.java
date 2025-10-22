@@ -14,6 +14,7 @@ public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
         // 랜덤한 0~9 사이의 값. List 사용.
+        // 
 
 
     }
