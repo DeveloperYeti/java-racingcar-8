@@ -1,7 +1,7 @@
 package method;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
-import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,16 +24,13 @@ public class Method {
         int tryChance = Integer.parseInt(str);
 
         if(tryChance>=0 && tryChance < 5){
-            List<List<String>> movement = Move(0,1,tryChance);
+            return move(0,1,tryChance);
         }
-        else {
             throw new IllegalArgumentException("잘못된 값 입력.");
-        }
-        return ;
     }
     // 각각의 name List를 생성하고 그에 맞
 
-    public static List<List<String>> Repeat() {
+    public static List<List<String>> repeat() {
         List<String> nameMake = inputName();
         int nameNumbers = nameMake.size();
         List<List<String>> names = new ArrayList<>();
@@ -46,14 +43,16 @@ public class Method {
     }
 
     //요구 사항에서 Range 함수를 사용하라고 해서 함수 사용 및 값 반환.
-    public static List<List<String>> Move(final int start , final int end , int tryChance) {
-        List<List<String>> movement = Repeat();
+    public static List<List<String>> move(final int start , final int end , int tryChance) {
+        List<List<String>> movement = repeat();
         int index = 0;
         for(int i = 0; i<tryChance; i++){
-            if(Randoms.pickNumberInRange(start,end) == 0)
+            index = i % movement.size();
+            int random = Randoms.pickNumberInRange(start, end);
+            if(random == 0)
             {
                 movement.get(index).add("");
-            } else if (Randoms.pickNumberInRange(start,end) == 1) {
+            } else if (random == 1) {
                 movement.get(index).add("-");
             }
             else {
