@@ -18,13 +18,14 @@ public class Method {
     }
 
     // 총 시도할 횟수 표시
-    public static List<List<String>> inputChance() {
+    public static List<List<String>> inputChance(List<List<String>>movement) {
         System.out.println("시도할 횟수");
         String str = Console.readLine();
-        int tryChance = Integer.parseInt(str);
 
+
+        int tryChance = Integer.parseInt(str);
         if(tryChance>=0 && tryChance < 5){
-            return move(0,1,tryChance);
+            return move(movement,0,1,tryChance);
         }
             throw new IllegalArgumentException("잘못된 값 입력.");
     }
@@ -43,16 +44,14 @@ public class Method {
     }
 
     //요구 사항에서 Range 함수를 사용하라고 해서 함수 사용 및 값 반환.
-    public static List<List<String>> move(final int start , final int end , int tryChance) {
-        List<List<String>> movement = repeat();
-        int index = 0;
+    public static List<List<String>> move(List<List<String>> movement ,final int start , final int end , int tryChance) {
         for(int i = 0; i<tryChance; i++){
-            index = i % movement.size();
+            int index = i % movement.size();
             int random = Randoms.pickNumberInRange(start, end);
-            if(random == 0)
+            if(0<= random && random<4)
             {
                 movement.get(index).add("");
-            } else if (random == 1) {
+            } else if (4<= random && random <=9) {
                 movement.get(index).add("-");
             }
             else {
@@ -61,5 +60,17 @@ public class Method {
         }
 
         return movement;
+    }
+
+    public static void print(List<List<String>> movement){
+        for(List<String> car : movement){
+            String name = car.get(0);
+            StringBuilder progress = new StringBuilder();
+
+            for (int i = 1; i < car.size(); i++) {
+                progress.append(car.get(i));
+            }
+            System.out.println(name + " : " + progress);
+        }
     }
 }
