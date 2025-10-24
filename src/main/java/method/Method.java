@@ -13,38 +13,54 @@ public class Method {
         String inputName = Console.readLine();
         String[] inputNameArr = inputName.split(",");
         for(String name : inputNameArr)
-            myList.add(name.trim());
+            myList.add(name.strip());
         return myList;
     }
 
     // 총 시도할 횟수 표시
-    public static List<String> inputChance(int nameNumbers) {
-        inputName();
+    public static List<List<String>> inputChance() {
         System.out.println("시도할 횟수");
         String str = Console.readLine();
         int tryChance = Integer.parseInt(str);
 
         if(tryChance>=0 && tryChance < 5){
-            Repeat(nameNumbers);
+            List<List<String>> movement = Move(0,1,tryChance);
         }
         else {
             throw new IllegalArgumentException("잘못된 값 입력.");
         }
-        return Repeat();
+        return ;
     }
     // 각각의 name List를 생성하고 그에 맞
 
-    public static List<List<String>> Repeat(int nameNumbers) {
+    public static List<List<String>> Repeat() {
+        List<String> nameMake = inputName();
+        int nameNumbers = nameMake.size();
         List<List<String>> names = new ArrayList<>();
         for (int i = 0; i < nameNumbers; i++) {
             List<String> name = new ArrayList<String>();
+            name.add(nameMake.get(i));
             names.add(name);
         }
         return names;
     }
 
     //요구 사항에서 Range 함수를 사용하라고 해서 함수 사용 및 값 반환.
-    public static int Move(final int start , final int end) {
-        return Randoms.pickNumberInRange(start,end);
+    public static List<List<String>> Move(final int start , final int end , int tryChance) {
+        List<List<String>> movement = Repeat();
+        int index = 0;
+        for(int i = 0; i<tryChance; i++){
+            if(Randoms.pickNumberInRange(start,end) == 0)
+            {
+                movement.get(index).add("");
+            } else if (Randoms.pickNumberInRange(start,end) == 1) {
+                movement.get(index).add("-");
+            }
+            else {
+                throw new IllegalArgumentException("범위 초과");
+            }
+        }
+
+        return movement;
     }
 }
